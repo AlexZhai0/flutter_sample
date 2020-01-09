@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'MySecondPageWidget.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -20,6 +22,11 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
+      // 注册路由表
+      routes: {
+        "second_page": (context) => MySecondPageWidget(),
+        "second_page2": (context) => MySecondPageWidget(text: ModalRoute.of(context).settings.arguments),
+      },
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -98,6 +105,21 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.display1,
             ),
+
+            FlatButton (
+              child: Text("按钮：打开另一个页面"),
+              textColor: Colors.black,
+              onPressed: () async {
+                var result = await Navigator.pushNamed(context, "second_page2", arguments: "sss");
+
+//                var result = await Navigator.push(context, MaterialPageRoute(builder: (context){
+//                  return MySecondPageWidget(
+//                    text: "要传递的内容",
+//                  );
+//                }));
+                print("要开启页面关闭时的返回值：$result");
+              },
+            )
           ],
         ),
       ),
@@ -109,3 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
+
+
